@@ -29,11 +29,20 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        include: ['./src'],
+        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env']
+            presets: [
+              ["env", {
+                "modules": false,
+                "targets": {
+                  "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
+                }
+              }],
+              "stage-2"
+            ],
+            plugins: ["transform-runtime"]
           }
         }
       },
@@ -68,6 +77,17 @@ module.exports = {
         // https://github.com/kangax/html-minifier#options-quick-reference
       },
       chunksSortMode: 'dependency' // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: function (module) {
+        // any required modules inside node_modules are extracted to vendor
+        return (
+          module.resource &&
+          /\.js$/.test(module.resource) &&
+          module.context.includes("node_modules")
+        )
+      }
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {

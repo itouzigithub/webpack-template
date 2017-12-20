@@ -59,6 +59,10 @@ const config = {
       },
       chunksSortMode: 'dependency' // necessary to consistently work with multiple chunks via CommonsChunkPlugin
     }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      filename: '[name].js'
+    }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()
   ]
