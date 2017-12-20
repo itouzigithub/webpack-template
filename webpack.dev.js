@@ -9,8 +9,7 @@ const config = {
   },
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: '/'
+    path: path.resolve(__dirname, 'dist')
   },
   module: {
     rules: [
