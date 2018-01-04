@@ -14,6 +14,21 @@ const config = {
   module: {
     rules: [
       {
+        test: /\.html$/,
+        loader: 'html-loader',
+        query: {
+          minimize: true,
+          /**
+           * webpack 构建的项目，通常无法直接在 html 中引用图片
+           * html-loader 解决了这个问题
+           * 下列配置表示 html-loader 会自动转化 img 的 src、data-src 和 div 的 data-src 中的路径（用于懒加载）
+           * 可以修改下列配置，实现更多的支持
+           * 开发时按正常的相对路径设置 url 即可，打包后会自动转化为最终的路径
+           */
+          attrs: ['img:src', 'img:data-src', 'div:data-src']
+        }
+      },
+      {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
       },

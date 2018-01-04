@@ -1,0 +1,7 @@
+.flex {
+	display: flex;
+}
+
+.all {
+	box-sizing: border-box;
+}

@@ -16,6 +16,14 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.html$/,
+        loader: 'html-loader',
+        query: {
+          minimize: true,
+          attrs: ['img:src', 'img:data-src', 'div:data-src']
+        }
+      },
+      {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
