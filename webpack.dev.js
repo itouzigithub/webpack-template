@@ -17,7 +17,6 @@ const config = {
         test: /\.html$/,
         loader: 'html-loader',
         query: {
-          minimize: true,
           /**
            * webpack 构建的项目，通常无法直接在 html 中引用图片
            * html-loader 解决了这个问题
@@ -44,41 +43,21 @@ const config = {
       },
       {
         test: /\.png|jpe?g|gif|svg$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: '[name].[ext]'
-        }
+        loader: 'url-loader'
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: '[name].[ext]'
-        }
+        loader: 'url-loader'
       }
     ]
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
-      inject: true,
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true
-        // https://github.com/kangax/html-minifier#options-quick-reference
-      },
-      chunksSortMode: 'dependency' // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: '[name].js'
-    }),
-    new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+      inject: true
+    })
   ]
 }
 
