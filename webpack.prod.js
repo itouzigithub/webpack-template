@@ -17,11 +17,16 @@ module.exports = {
     rules: [
       {
         test: /\.html$/,
-        loader: 'html-loader',
-        query: {
-          minimize: true,
-          attrs: ['img:src', 'img:data-src', 'div:data-src']
-        }
+        use: [
+          {
+            loader: 'html-loader',
+            options: {
+              minimize: true,
+              removeComments: true,
+              attrs: ['img:src', 'img:data-src', 'div:data-src']
+            }
+          }
+        ]
       },
       {
         test: /\.css$/,
@@ -63,7 +68,7 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
-              limit: 10000,
+              limit: 1024, // 不能 <= 0
               name: 'static/img/[name].[hash:8].[ext]'
             }
           },
@@ -107,15 +112,9 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
     }),
     new HtmlWebpackPlugin({
-      filename: 'index.html',
+      filename: 'index.html', // 生成的目标文件名，后缀可以改为`tpl`
       template: 'index.html',
       inject: true,
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true
-        // https://github.com/kangax/html-minifier#options-quick-reference
-      },
       chunksSortMode: 'dependency' // necessary to consistently work with multiple chunks via CommonsChunkPlugin
     })
   ]
