@@ -41,6 +41,7 @@
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not ie > 0"
+    "ie > 10",
+    "Firefox > 50"
   ]
 }
