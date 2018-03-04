@@ -9,7 +9,7 @@ module.exports = {
     index: './src/index.js'
   },
   output: {
-    filename: 'static/js/[name].[hash:8].js',
+    filename: 'static/js/[name].[chunkhash:8].js',
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/'
   },
@@ -106,7 +106,7 @@ module.exports = {
       },
       sourceMap: false
     }),
-    new ExtractTextPlugin("static/css/[name].[hash:8].css"),
+    new ExtractTextPlugin("static/css/[name].[contenthash:8].css"),
     new webpack.NamedModulesPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
